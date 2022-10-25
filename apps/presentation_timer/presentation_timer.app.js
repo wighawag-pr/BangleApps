@@ -7,6 +7,7 @@ let running = false;
 let timeY = 2*h/5;
 let displayInterval;
 let redrawButtons = true;
+let lastSlide = 0;
 const iconScale = g.getWidth() / 178; // scale up/down based on Bangle 2 size
 
 // 24 pixel images, scale to watch
@@ -94,7 +95,14 @@ function drawTime() {
   let Tt = tCurrent-tTotal;
   let Ttxt = timeToText(Tt);
 
-  Ttxt += "\n"+findSlide(Tt);
+  let slideNumber = findSlide(Tt);
+
+  if (lastSlide != slideNumber) {
+    lastSlide = slideNumber;
+    Bangle.buzz(1000);
+  }
+  
+  Ttxt += "\n"+slideNumber;
   // total time
   g.setFont("Vector",38);  // check
   g.setFontAlign(0,0);
@@ -112,6 +120,7 @@ function draw() {
 }
 
 function startTimer() {
+  lastSlide = 0;
   log_debug("startTimer()");
   draw();
   displayInterval = setInterval(draw, 100);
