@@ -90,6 +90,14 @@ function findSlide(time) {
   return /*LANG*/"end!";
 }
 
+function dbl_buzz() {
+  Bangle.buzz(1000).then(() => {
+    (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
+      Bangle.buzz(1000);
+    });
+  })
+}
+
 function drawTime() {
   log_debug("drawTime()");
   let Tt = tCurrent-tTotal;
@@ -99,7 +107,7 @@ function drawTime() {
 
   if (lastSlide != slideNumber) {
     lastSlide = slideNumber;
-    Bangle.buzz(1000);
+    dbl_buzz();
   }
   
   Ttxt += "\n"+slideNumber;
