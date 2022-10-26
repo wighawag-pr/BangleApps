@@ -98,21 +98,20 @@ function dbl_buzz() {
   })
 }
 
+function wait(ms) {
+  return (new Promise(resolve=>setTimeout(resolve,ms)));
+}
+
 function five_buzz() {
-  Bangle.buzz(1000).then(() => {
-    return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
-      Bangle.buzz(1000);
-      return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
-        Bangle.buzz(1000);
-        return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
-          Bangle.buzz(1000);
-          return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
-            Bangle.buzz(1000);
-          });
-        });
-      });
-    });
-  })
+  return Bangle.buzz(500)
+  .then(() => wait(300))
+  .then(() => Bangle.buzz(500))
+  .then(() => wait(300))
+  .then(() => Bangle.buzz(500))
+  .then(() => wait(300))
+  .then(() => Bangle.buzz(500))
+  .then(() => wait(300))
+  .then(() => Bangle.buzz(500))
 }
 
 function drawTime() {
