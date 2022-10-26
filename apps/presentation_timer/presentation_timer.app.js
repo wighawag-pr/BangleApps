@@ -98,6 +98,23 @@ function dbl_buzz() {
   })
 }
 
+function five_buzz() {
+  Bangle.buzz(1000).then(() => {
+    return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
+      Bangle.buzz(1000);
+      return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
+        Bangle.buzz(1000);
+        return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
+          Bangle.buzz(1000);
+          return (new Promise(resolve=>setTimeout(resolve,500))).then(() => {
+            Bangle.buzz(1000);
+          });
+        });
+      });
+    });
+  })
+}
+
 function drawTime() {
   log_debug("drawTime()");
   let Tt = tCurrent-tTotal;
@@ -105,9 +122,13 @@ function drawTime() {
 
   let slideNumber = findSlide(Tt);
 
-  if (lastSlide != slideNumber) {
-    lastSlide = slideNumber;
-    dbl_buzz();
+  if (slideNumber === "end!") {
+    five_buzz();
+  } else {
+    if (lastSlide != slideNumber) {
+      lastSlide = slideNumber;
+      dbl_buzz();
+    }
   }
   
   Ttxt += "\n"+slideNumber;
